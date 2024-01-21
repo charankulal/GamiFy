@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../data.dart';
+import '../widgets/scrollable_games_widget.dart';
 
 class HomePage extends StatefulWidget {
   // @override
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _featuredGamesWidget() {
     return SizedBox(
-      height: _deviceHeight * 0.50,
+      height: _deviceHeight * 0.35,
       width: _deviceWidth,
       child: PageView(
         onPageChanged: (_index) {
@@ -78,7 +79,7 @@ class _HomePageState extends State<HomePage> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
               colors: [Color.fromRGBO(35, 45, 59, 1.0), Colors.transparent],
-              stops: [0.65, 1.0],
+              stops: [0.85, 1.0],
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter),
         ),
@@ -97,9 +98,10 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           _topBarWidget(),
           SizedBox(
-            height: _deviceHeight * 0.20,
+            height: _deviceHeight * 0.10,
           ),
           _featuredGamesInfoWidget(),
+          Padding(padding:EdgeInsets.symmetric(vertical: _deviceHeight*0.01),child: ScrollableGamesWidget(_deviceHeight*0.24, _deviceWidth, true, games),),
         ],
       ),
     );
