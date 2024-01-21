@@ -17,10 +17,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _deviceHeight;
   var _deviceWidth;
+  var _selectedGame;
 
   @override
   void initState() {
     super.initState();
+    _selectedGame = 0;
   }
 
   @override
@@ -43,6 +45,11 @@ class _HomePageState extends State<HomePage> {
       height: _deviceHeight * 0.50,
       width: _deviceWidth,
       child: PageView(
+        onPageChanged: (_index) {
+          setState(() {
+            _selectedGame = _index;
+          });
+        },
         scrollDirection: Axis.horizontal,
         children: featuredGames.map(
           (game) {
@@ -81,15 +88,20 @@ class _HomePageState extends State<HomePage> {
 
   Widget _topLayerWidget() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: _deviceWidth*0.05,vertical: _deviceHeight*0.005),
+      padding: EdgeInsets.symmetric(
+          horizontal: _deviceWidth * 0.05, vertical: _deviceHeight * 0.005),
       child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        _topBarWidget(),
-      ],
-    ),
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          _topBarWidget(),
+          SizedBox(
+            height: _deviceHeight * 0.20,
+          ),
+          _featuredGamesInfoWidget(),
+        ],
+      ),
     );
   }
 
@@ -122,6 +134,49 @@ class _HomePageState extends State<HomePage> {
                 size: 30,
               ),
             ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _featuredGamesInfoWidget() {
+    return SizedBox(
+      height: _deviceHeight * 0.12,
+      width: _deviceWidth,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            featuredGames[_selectedGame].title,
+            maxLines: 2,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: _deviceHeight * 0.040,
+            ),
+          ),
+          SizedBox(
+            height: _deviceHeight * 0.01,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: featuredGames.map((_game) {
+              bool _isActive =
+                  _game.title == featuredGames[_selectedGame].title;
+              double _circleRadius = _deviceHeight * 0.008;
+              return Container(
+                margin: EdgeInsets.only(right: _deviceHeight * 0.015),
+                height: _circleRadius * 2,
+                width: _circleRadius * 2,
+                decoration: BoxDecoration(
+                    color: _isActive ? Colors.green : Colors.grey,
+                    borderRadius: BorderRadius.circular(100)),
+              );
+            }).toList(),
           )
         ],
       ),
