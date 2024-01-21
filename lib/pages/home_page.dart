@@ -107,6 +107,7 @@ class _HomePageState extends State<HomePage> {
                 _deviceHeight * 0.24, _deviceWidth, true, games),
           ),
           _featuredGameBannerWidget(),
+          ScrollableGamesWidget(_deviceHeight*0.24, _deviceWidth, false, games2)
         ],
       ),
     );
@@ -192,7 +193,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _featuredGameBannerWidget() {
     return Container(
-      height: _deviceHeight * 0.15,
+      height: _deviceHeight * 0.17,
       width: _deviceWidth,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
