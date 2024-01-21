@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Stack(children: <Widget>[
         _featuredGamesWidget(),
+        _gradientBoxWidget(),
       ]),
     );
   }
@@ -38,19 +39,37 @@ class _HomePageState extends State<HomePage> {
       width: _deviceWidth,
       child: PageView(
         scrollDirection: Axis.horizontal,
-        children: featuredGames.map((game) {
-          return Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                  game.coverImage.url,
+        children: featuredGames.map(
+          (game) {
+            return Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    game.coverImage.url,
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
         ).toList(),
+      ),
+    );
+  }
+
+  Widget _gradientBoxWidget() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        height: _deviceHeight * 0.8,
+        width: _deviceWidth,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [Color.fromRGBO(35, 45, 59, 1.0), Colors.transparent],
+              stops: [0.65, 1.0],
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter),
+        ),
       ),
     );
   }
